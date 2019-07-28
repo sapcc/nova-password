@@ -1,3 +1,12 @@
+# Usage
+Use `nova-password` to obtain the decrypted password for the the following user accounts:
+
+- `Administrator` for Windows servers
+- `ccloud` for Linux servers
+
+Source the `openrc` of the project where the server is running in the current shell to load the relevant ENV vars.
+
+
 # Synopsis
 ```
 $ nova-password -h
@@ -11,19 +20,15 @@ Flags:
   -h, --help                      help for nova-password
   -i, --private-key-path string   a path to the RSA private key (PuTTY and OpenSSH formats) (default "/Users/uuu/.ssh/id_rsa")
   -v, --version                   print the nova-password version
-
 ```
-# Usage
-
-- source the `openrc` of the project where the server is running in the current shell to load the relevant ENV vars
 
 
 ## Prerequisites
 - The user's (admin) password is provisioned when the server is created. We assume this hasn't been altered.
-- During creation, the password is encrypted using your **public** SSH key, which is in your User Profile. 
+- When CCloud creates a server, the admin password is encrypted using your **public** SSH key, 
+  which is in your User Profile. 
 - The **private** key corresponding to that public key, is used to decrypt the password.
   It is assumed to be your default private key, but you can specify another using `-i`. 
-- Only RSA PKCS #1 v1.5 is supported by OpenStack (**elaborate**)
 
 ## Windows
 
@@ -36,3 +41,6 @@ Flags:
 # using a PuTTY ppk
 .\nova-password.exe my-server -i C:\Users\user\.ssh\putty.ppk
 ```
+
+## MacOS/Linux
+<< add here >>
