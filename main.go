@@ -100,6 +100,8 @@ var RootCmd = &cobra.Command{
 			}
 		}
 
+		var errors []error
+
 		switch v := privateKey.(type) {
 		// Only RSA PKCS #1 v1.5 is supported by OpenStack
 		case *rsa.PrivateKey:
@@ -113,10 +115,15 @@ var RootCmd = &cobra.Command{
 				err = processServer(client, server, v)
 				if err != nil {
 					log.Printf("%s", err)
+					errors = append(errors, err)
 				}
 			}
 		default:
 			return fmt.Errorf("unsupported key type %T\nOnly RSA PKCS #1 v1.5 is supported by OpenStack", v)
+		}
+
+		if len(errors) > 0 {
+			return fmt.Errorf("%v", errors)
 		}
 
 		return nil
