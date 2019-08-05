@@ -24,11 +24,14 @@ import (
 
 const MaxKeySize = 10240
 
+var Version string
+
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
 	Use:          "nova-password <server-name>|<server-id> [<server-name>|<server-id>...]",
 	Short:        "Get the admin password for an OpenStack server",
 	SilenceUsage: true,
+	Version:      Version,
 	PreRunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) == 0 {
 			cmd.Usage()
