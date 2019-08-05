@@ -37,6 +37,8 @@ var RootCmd = &cobra.Command{
 		return nil
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
+		// get the wait timeout
+		wait := viper.GetUint("wait")
 		// Convert Unix path type to Windows path type, when necessary
 		keyPath := filepath.FromSlash(viper.GetString("private-key-path"))
 
@@ -112,7 +114,7 @@ var RootCmd = &cobra.Command{
 			}
 
 			for _, server := range args {
-				err = processServer(client, server, v)
+				err = processServer(client, server, v, wait)
 				if err != nil {
 					log.Printf("%s", err)
 					errors = append(errors, err)
@@ -152,8 +154,10 @@ func initRootCmdFlags() {
 	// debug flag
 	RootCmd.PersistentFlags().BoolP("debug", "d", false, "print out request and response objects")
 	RootCmd.PersistentFlags().StringP("private-key-path", "i", defaultKeyPath, "a path to the RSA private key (PuTTY and OpenSSH formats)")
+	RootCmd.PersistentFlags().UintP("wait", "w", 0, "wait for the password timeout in seconds")
 	viper.BindPFlag("debug", RootCmd.PersistentFlags().Lookup("debug"))
 	viper.BindPFlag("private-key-path", RootCmd.PersistentFlags().Lookup("private-key-path"))
+	viper.BindPFlag("wait", RootCmd.PersistentFlags().Lookup("wait"))
 }
 
 // newComputeV2 creates a ServiceClient that may be used with the v2 compute
@@ -187,7 +191,7 @@ func newComputeV2() (*gophercloud.ServiceClient, error) {
 	})
 }
 
-func processServer(client *gophercloud.ServiceClient, server string, privateKey *rsa.PrivateKey) error {
+func processServer(client *gophercloud.ServiceClient, server string, privateKey *rsa.PrivateKey, wait uint) error {
 	// Verify whether UUID was provided. If the name was provided, resolve the server name
 	_, err := uuid.Parse(server)
 	if err != nil {
@@ -202,20 +206,55 @@ func processServer(client *gophercloud.ServiceClient, server string, privateKey 
 		fmt.Printf("server: %s\n", server)
 	}
 
-	// Get the encrypted server password
-	req := servers.GetPassword(client, server)
-	if req.Err != nil {
-		return req.Err
+	var res servers.GetPasswordResult
+	if wait > 0 {
+		log.Printf("Waiting for %d seconds to get the password", wait)
+		// Wait for the encrypted server password
+		res, err = waitForPassword(client, server, wait)
+		if err != nil {
+			return err
+		}
+	} else {
+		// Get the encrypted server password
+		res = servers.GetPassword(client, server)
+	}
+
+	if res.Err != nil {
+		return res.Err
 	}
 
 	// Decrypt the password
-	pwd, err := req.ExtractPassword(privateKey)
+	pwd, err := res.ExtractPassword(privateKey)
 	if err != nil {
 		return err
 	}
 	fmt.Printf("Decrypted compute instance password: %s\n", pwd)
 
 	return nil
+}
+
+func waitForPassword(c *gophercloud.ServiceClient, id string, secs uint) (servers.GetPasswordResult, error) {
+	var res servers.GetPasswordResult
+	err := gophercloud.WaitFor(int(secs), func() (bool, error) {
+		var err error
+		res = servers.GetPassword(c, id)
+		if res.Err != nil {
+			return false, res.Err
+		}
+
+		pass, err := res.ExtractPassword(nil)
+		if err != nil {
+			return false, err
+		}
+
+		if pass == "" {
+			return false, nil
+		}
+
+		return true, nil
+	})
+
+	return res, err
 }
 
 func readKey(path string) ([]byte, error) {
