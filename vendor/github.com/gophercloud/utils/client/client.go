@@ -211,7 +211,7 @@ func (rt *RoundTripper) RoundTrip(request *http.Request) (*http.Response, error)
 // If the body is JSON, it will attempt to be pretty-formatted.
 func (rt *RoundTripper) logRequest(original io.ReadCloser, contentType string) (io.ReadCloser, error) {
 	// Handle request contentType
-	if strings.HasPrefix(contentType, "application/json") {
+	if strings.HasPrefix(contentType, "application/json") || (strings.HasPrefix(contentType, "application/") && strings.HasSuffix(contentType, "-json-patch")) {
 		var bs bytes.Buffer
 		defer original.Close()
 

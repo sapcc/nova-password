@@ -1,16 +1,14 @@
-module github.wdf.sap.corp/cc/nova-password
+module github.com/sapcc/nova-password
 
-go 1.12
+go 1.14
 
 require (
-	github.com/google/uuid v1.1.1
-	github.com/gophercloud/gophercloud v0.6.1-0.20191019020556-0907b320e0ac
-	github.com/gophercloud/utils v0.0.0-20191020172814-bd86af96d544
-	github.com/howeyc/gopass v0.0.0-20170109162249-bf9dde6d0d2c
-	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/google/uuid v1.1.2-0.20190416172445-c2e93f3ae59f
+	github.com/gophercloud/gophercloud v0.8.1-0.20200306172827-d936e6876d28
+	github.com/gophercloud/utils v0.0.0-20200302155035-0565566533e4
+	github.com/howeyc/gopass v0.0.0-20190910152052-7cb4b85ec19c
 	github.com/kayrus/putty v0.0.0-20190531171731-550ff2bc782c
-	github.com/sapcc/cloud-env v0.0.0-20190605131219-0ee79abc7af8
-	github.com/spf13/cobra v0.0.3
-	github.com/spf13/viper v1.4.0
-	golang.org/x/crypto v0.0.0-20190513172903-22d7a77e9e5f
+	github.com/spf13/cobra v0.0.7-0.20200228181340-95f2f73ed97e
+	github.com/spf13/viper v1.6.3-0.20200219234104-97ee7adfef48
+	golang.org/x/crypto v0.0.0-20200302210943-78000ba7a073
 )

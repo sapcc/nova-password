@@ -20,6 +20,11 @@ Flags:
 * The private key corresponding to the public key, used to create a compute instance, is required
 * Only RSA PKCS #1 v1.5 is supported by OpenStack
 
+## TLS options
+
+* `OS_CACERT` - environment variable with a path to custom CA certificate.
+* `OS_INSECURE` - skip endpoint TLS certificate validation. Set to `true` **only if you are otherwise convinced of the OpenStack endpoint's authenticity**.
+
 ## Windows
 
 ```sh

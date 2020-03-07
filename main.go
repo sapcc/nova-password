@@ -2,22 +2,26 @@ package main
 
 import (
 	"crypto/rsa"
+	"crypto/tls"
+	"crypto/x509"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"os/user"
 	"path/filepath"
+	"strings"
 
 	"github.com/google/uuid"
 	"github.com/gophercloud/gophercloud"
 	"github.com/gophercloud/gophercloud/openstack"
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/servers"
 	"github.com/gophercloud/utils/client"
+	"github.com/gophercloud/utils/env"
 	"github.com/gophercloud/utils/openstack/clientconfig"
 	"github.com/howeyc/gopass"
 	"github.com/kayrus/putty"
-	env "github.com/sapcc/cloud-env"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"golang.org/x/crypto/ssh"
@@ -181,10 +185,30 @@ func newComputeV2() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
+	config := &tls.Config{}
+	if v := os.Getenv("OS_INSECURE"); v != "" {
+		config.InsecureSkipVerify = strings.ToLower(v) == "true"
+	}
+
+	if v := os.Getenv("OS_CACERT"); v != "" {
+		caCert, err := ioutil.ReadFile(v)
+		if err != nil {
+			return nil, fmt.Errorf("failed to read %q CA certificate: %s", v, err)
+		}
+		caPool := x509.NewCertPool()
+		ok := caPool.AppendCertsFromPEM([]byte(caCert))
+		if !ok {
+			return nil, fmt.Errorf("failed to parse %q CA certificate", v)
+		}
+		config.RootCAs = caPool
+	}
+
+	provider.HTTPClient.Transport = &http.Transport{TLSClientConfig: config}
+
 	if viper.GetBool("debug") {
 		provider.HTTPClient = http.Client{
 			Transport: &client.RoundTripper{
-				Rt:     &http.Transport{},
+				Rt:     provider.HTTPClient.Transport,
 				Logger: &client.DefaultLogger{},
 			},
 		}
@@ -307,7 +331,7 @@ func readKey(path string) ([]byte, error) {
 }
 
 func getKeyPass(quiet bool) ([]byte, error) {
-	pass := env.Get("NOVA_PASSWORD_KEY_PASSWORD")
+	pass := env.Getenv("NOVA_PASSWORD_KEY_PASSWORD")
 
 	if pass == "" {
 		if quiet == true {
