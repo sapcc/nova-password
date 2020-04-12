@@ -896,13 +896,7 @@ func UnmarshalKey(key string, rawVal interface{}, opts ...DecoderConfigOption) e
 	return v.UnmarshalKey(key, rawVal, opts...)
 }
 func (v *Viper) UnmarshalKey(key string, rawVal interface{}, opts ...DecoderConfigOption) error {
-	err := decode(v.Get(key), defaultDecoderConfig(rawVal, opts...))
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return decode(v.Get(key), defaultDecoderConfig(rawVal, opts...))
 }
 
 // Unmarshal unmarshals the config into a Struct. Make sure that the tags
@@ -911,13 +905,7 @@ func Unmarshal(rawVal interface{}, opts ...DecoderConfigOption) error {
 	return v.Unmarshal(rawVal, opts...)
 }
 func (v *Viper) Unmarshal(rawVal interface{}, opts ...DecoderConfigOption) error {
-	err := decode(v.AllSettings(), defaultDecoderConfig(rawVal, opts...))
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return decode(v.AllSettings(), defaultDecoderConfig(rawVal, opts...))
 }
 
 // defaultDecoderConfig returns default mapsstructure.DecoderConfig with suppot
@@ -956,13 +944,7 @@ func (v *Viper) UnmarshalExact(rawVal interface{}, opts ...DecoderConfigOption) 
 	config := defaultDecoderConfig(rawVal, opts...)
 	config.ErrorUnused = true
 
-	err := decode(v.AllSettings(), config)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return decode(v.AllSettings(), config)
 }
 
 // BindPFlags binds a full flag set to the configuration, using each flag's long
@@ -1083,6 +1065,8 @@ func (v *Viper) find(lcaseKey string, flagDefault bool) interface{} {
 			s = strings.TrimSuffix(s, "]")
 			res, _ := readAsCSV(s)
 			return cast.ToIntSlice(res)
+		case "stringToString":
+			return stringToStringConv(flag.ValueString())
 		default:
 			return flag.ValueString()
 		}
@@ -1158,6 +1142,8 @@ func (v *Viper) find(lcaseKey string, flagDefault bool) interface{} {
 				s = strings.TrimSuffix(s, "]")
 				res, _ := readAsCSV(s)
 				return cast.ToIntSlice(res)
+			case "stringToString":
+				return stringToStringConv(flag.ValueString())
 			default:
 				return flag.ValueString()
 			}
@@ -1175,6 +1161,30 @@ func readAsCSV(val string) ([]string, error) {
 	stringReader := strings.NewReader(val)
 	csvReader := csv.NewReader(stringReader)
 	return csvReader.Read()
+}
+
+// mostly copied from pflag's implementation of this operation here https://github.com/spf13/pflag/blob/master/string_to_string.go#L79
+// alterations are: errors are swallowed, map[string]interface{} is returned in order to enable cast.ToStringMap
+func stringToStringConv(val string) interface{} {
+	val = strings.Trim(val, "[]")
+	// An empty string would cause an empty map
+	if len(val) == 0 {
+		return map[string]interface{}{}
+	}
+	r := csv.NewReader(strings.NewReader(val))
+	ss, err := r.Read()
+	if err != nil {
+		return nil
+	}
+	out := make(map[string]interface{}, len(ss))
+	for _, pair := range ss {
+		kv := strings.SplitN(pair, "=", 2)
+		if len(kv) != 2 {
+			return nil
+		}
+		out[kv[0]] = kv[1]
+	}
+	return out
 }
 
 // IsSet checks to see if the key has been set in any of the data locations.
@@ -1621,7 +1631,7 @@ func (v *Viper) marshalWriter(f afero.File, configType string) error {
 			if sectionName == "default" {
 				sectionName = ""
 			}
-			cfg.Section(sectionName).Key(keyName).SetValue(Get(key).(string))
+			cfg.Section(sectionName).Key(keyName).SetValue(v.Get(key).(string))
 		}
 		cfg.WriteTo(f)
 	}

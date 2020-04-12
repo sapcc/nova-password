@@ -20,6 +20,7 @@ import (
 	"github.com/gophercloud/utils/client"
 	"github.com/gophercloud/utils/env"
 	"github.com/gophercloud/utils/openstack/clientconfig"
+	servers_utils "github.com/gophercloud/utils/openstack/compute/v2/servers"
 	"github.com/howeyc/gopass"
 	"github.com/kayrus/putty"
 	"github.com/spf13/cobra"
@@ -229,7 +230,7 @@ func processServer(client *gophercloud.ServiceClient, server string, privateKey 
 	// Verify whether UUID was provided. If the name was provided, resolve the server name
 	_, err := uuid.Parse(server)
 	if err != nil {
-		server, err = servers.IDFromName(client, server)
+		server, err = servers_utils.IDFromName(client, server)
 		if err != nil {
 			return err
 		}
