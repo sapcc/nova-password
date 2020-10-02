@@ -170,7 +170,6 @@ func initRootCmdFlags() {
 	viper.BindPFlag("private-key-path", RootCmd.PersistentFlags().Lookup("private-key-path"))
 	viper.BindPFlag("wait", RootCmd.PersistentFlags().Lookup("wait"))
 	viper.BindPFlag("quiet", RootCmd.PersistentFlags().Lookup("quiet"))
-
 }
 
 // newComputeV2 creates a ServiceClient that may be used with the v2 compute
@@ -215,6 +214,7 @@ func newComputeV2() (*gophercloud.ServiceClient, error) {
 		}
 	}
 
+	provider.UserAgent.Prepend("nova-password/" + Version)
 	err = openstack.Authenticate(provider, *ao)
 	if err != nil {
 		return nil, err
