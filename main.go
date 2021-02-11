@@ -53,7 +53,7 @@ var RootCmd = &cobra.Command{
 		// Convert Unix path type to Windows path type, when necessary
 		keyPath := filepath.FromSlash(viper.GetString("private-key-path"))
 
-		if quiet == false {
+		if !quiet {
 			log.Printf("private-key-path: %s\n", keyPath)
 		}
 
@@ -126,8 +126,8 @@ var RootCmd = &cobra.Command{
 			for _, server := range args {
 				err = processServer(client, server, v, wait, quiet)
 				if err != nil {
-					log.Printf("Error getting the password for the %q server: %s", server, err)
-					errors = append(errors, fmt.Errorf("Error getting the password for the %q server: %s", server, err))
+					log.Printf("error getting the password for the %q server: %s", server, err)
+					errors = append(errors, fmt.Errorf("error getting the password for the %q server: %s", server, err))
 				}
 			}
 		default:
@@ -234,14 +234,14 @@ func processServer(client *gophercloud.ServiceClient, server string, privateKey 
 		if err != nil {
 			return err
 		}
-		if quiet == false {
+		if !quiet {
 			log.Printf("Resolved %q server name to the %q uuid", tmp, server)
 		}
 	}
 
 	var res servers.GetPasswordResult
 	if wait > 0 {
-		if quiet == false {
+		if !quiet {
 			log.Printf("Waiting for %d seconds to get the password", wait)
 		}
 		// Wait for the encrypted server password
@@ -264,7 +264,7 @@ func processServer(client *gophercloud.ServiceClient, server string, privateKey 
 		return err
 	}
 
-	if quiet == false {
+	if !quiet {
 		fmt.Printf("%q instance password: %s\n", tmp, pwd)
 	} else {
 		fmt.Printf("%s\n", pwd)
@@ -312,7 +312,7 @@ func readKey(path string) ([]byte, error) {
 
 	size := stat.Size()
 	if size > MaxKeySize {
-		return nil, fmt.Errorf("Invalid key size: %d bytes", size)
+		return nil, fmt.Errorf("invalid key size: %d bytes", size)
 	}
 
 	if size == 0 {
@@ -335,8 +335,8 @@ func getKeyPass(quiet bool) ([]byte, error) {
 	pass := env.Getenv("NOVA_PASSWORD_KEY_PASSWORD")
 
 	if pass == "" {
-		if quiet == true {
-			return nil, fmt.Errorf(`Private key is encrypted with the password, please set the "NOVA_PASSWORD_KEY_PASSWORD" environment variable`)
+		if quiet {
+			return nil, fmt.Errorf(`private key is encrypted with the password, please set the "NOVA_PASSWORD_KEY_PASSWORD" environment variable`)
 		}
 
 		log.Print("Private key is encrypted with the password")

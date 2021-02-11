@@ -3,7 +3,7 @@ github.com/fsnotify/fsnotify
 # github.com/google/uuid v1.1.2
 ## explicit
 github.com/google/uuid
-# github.com/gophercloud/gophercloud v0.13.0
+# github.com/gophercloud/gophercloud v0.15.1-0.20210205220151-18b16b34db5c
 ## explicit
 github.com/gophercloud/gophercloud
 github.com/gophercloud/gophercloud/openstack
@@ -15,11 +15,12 @@ github.com/gophercloud/gophercloud/openstack/identity/v3/extensions/oauth1
 github.com/gophercloud/gophercloud/openstack/identity/v3/tokens
 github.com/gophercloud/gophercloud/openstack/utils
 github.com/gophercloud/gophercloud/pagination
-# github.com/gophercloud/utils v0.0.0-20200918191848-da0e919a012a
+# github.com/gophercloud/utils v0.0.0-20210209042946-13abf2251886
 ## explicit
 github.com/gophercloud/utils/client
 github.com/gophercloud/utils/env
 github.com/gophercloud/utils/gnocchi
+github.com/gophercloud/utils/internal
 github.com/gophercloud/utils/openstack/clientconfig
 github.com/gophercloud/utils/openstack/compute/v2/servers
 # github.com/hashicorp/hcl v1.0.0
@@ -38,11 +39,13 @@ github.com/hashicorp/hcl/json/token
 github.com/howeyc/gopass
 # github.com/inconshreveable/mousetrap v1.0.0
 github.com/inconshreveable/mousetrap
-# github.com/kayrus/putty v1.0.1
+# github.com/kayrus/putty v1.0.2
 ## explicit
 github.com/kayrus/putty
 # github.com/magiconair/properties v1.8.1
 github.com/magiconair/properties
+# github.com/mitchellh/go-homedir v1.1.0
+github.com/mitchellh/go-homedir
 # github.com/mitchellh/mapstructure v1.1.2
 github.com/mitchellh/mapstructure
 # github.com/pelletier/go-toml v1.2.0
@@ -64,7 +67,7 @@ github.com/spf13/pflag
 github.com/spf13/viper
 # github.com/subosito/gotenv v1.2.0
 github.com/subosito/gotenv
-# golang.org/x/crypto v0.0.0-20201002094018-c90954cbb977
+# golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad
 ## explicit
 golang.org/x/crypto/blowfish
 golang.org/x/crypto/chacha20
@@ -76,10 +79,14 @@ golang.org/x/crypto/poly1305
 golang.org/x/crypto/ssh
 golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
 golang.org/x/crypto/ssh/terminal
-# golang.org/x/sys v0.0.0-20191128015809-6d18c012aee9
+# golang.org/x/sys v0.0.0-20201119102817-f84b799fce68
 golang.org/x/sys/cpu
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
+# golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1
+golang.org/x/term
 # golang.org/x/text v0.3.2
 golang.org/x/text/encoding
 golang.org/x/text/encoding/charmap
@@ -89,5 +96,5 @@ golang.org/x/text/transform
 golang.org/x/text/unicode/norm
 # gopkg.in/ini.v1 v1.51.0
 gopkg.in/ini.v1
-# gopkg.in/yaml.v2 v2.3.0
+# gopkg.in/yaml.v2 v2.4.0
 gopkg.in/yaml.v2

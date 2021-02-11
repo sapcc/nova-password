@@ -3,7 +3,7 @@ APP_NAME:=nova-password
 PWD:=$(shell pwd)
 UID:=$(shell id -u)
 VERSION:=$(shell git describe --tags --always --dirty="-dev")
-LDFLAGS:=-X main.Version=$(VERSION)
+LDFLAGS:=-X main.Version=$(VERSION) -w -s
 
 export CGO_ENABLED:=0
 
@@ -13,6 +13,7 @@ build: fmt vet
 	GOOS=windows go build -mod=vendor -ldflags="$(LDFLAGS)" -o bin/$(APP_NAME).exe $(PKG)
 
 docker:
+	docker pull golang:latest
 	docker run -ti --rm -e GOCACHE=/tmp -v $(PWD):/$(APP_NAME) -u $(UID):$(UID) --workdir /$(APP_NAME) golang:latest make
 
 fmt:
