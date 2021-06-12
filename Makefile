@@ -22,5 +22,8 @@ fmt:
 vet:
 	go vet -mod=vendor ./
 
+static:
+	staticcheck ./
+
 mod:
 	go mod vendor
