@@ -91,7 +91,7 @@ var RootCmd = &cobra.Command{
 			// Parse the pem key
 			privateKey, err = ssh.ParseRawPrivateKey(key)
 			if err != nil {
-				if err.Error() != "ssh: no key found" {
+				if _, ok := err.(*ssh.PassphraseMissingError); ok {
 					// If the key is encrypted, decrypt it
 					pass, err := getKeyPass(quiet)
 					if err != nil {
