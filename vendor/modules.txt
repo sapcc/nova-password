@@ -39,7 +39,7 @@ github.com/hashicorp/hcl/json/token
 github.com/howeyc/gopass
 # github.com/inconshreveable/mousetrap v1.0.0
 github.com/inconshreveable/mousetrap
-# github.com/kayrus/putty v1.0.3
+# github.com/kayrus/putty v1.0.4
 ## explicit
 github.com/kayrus/putty
 # github.com/magiconair/properties v1.8.1
