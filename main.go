@@ -28,7 +28,7 @@ import (
 	"golang.org/x/crypto/ssh"
 )
 
-const MaxKeySize = 10240
+const maxKeySize = 10240
 
 var Version string
 
@@ -135,6 +135,9 @@ var RootCmd = &cobra.Command{
 		}
 
 		if len(errors) > 0 {
+			if len(errors) == 1 {
+				return errors[0]
+			}
 			return fmt.Errorf("%v", errors)
 		}
 
@@ -311,13 +314,13 @@ func readKey(path string) ([]byte, error) {
 	}
 
 	size := stat.Size()
-	if size > MaxKeySize {
+	if size > maxKeySize {
 		return nil, fmt.Errorf("invalid key size: %d bytes", size)
 	}
 
 	if size == 0 {
-		// force to use "MaxKeySize", when detected file size is 0 (e.g. /dev/stdin)
-		size = MaxKeySize
+		// force to use "maxKeySize", when detected file size is 0 (e.g. /dev/stdin)
+		size = maxKeySize
 	}
 
 	key := make([]byte, size)
@@ -340,7 +343,7 @@ func getKeyPass(quiet bool) ([]byte, error) {
 		}
 
 		log.Print("Private key is encrypted with the password")
-		fmt.Print("Enter the password: ")
+		fmt.Print("Enter the key password: ")
 		return gopass.GetPasswd()
 	}
 
