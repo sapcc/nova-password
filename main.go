@@ -12,6 +12,7 @@ import (
 	"os/user"
 	"path/filepath"
 	"strings"
+	"syscall"
 
 	"github.com/google/uuid"
 	"github.com/gophercloud/gophercloud"
@@ -21,11 +22,11 @@ import (
 	"github.com/gophercloud/utils/env"
 	"github.com/gophercloud/utils/openstack/clientconfig"
 	servers_utils "github.com/gophercloud/utils/openstack/compute/v2/servers"
-	"github.com/howeyc/gopass"
 	"github.com/kayrus/putty"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"golang.org/x/crypto/ssh"
+	"golang.org/x/term"
 )
 
 const maxKeySize = 10240
@@ -79,7 +80,7 @@ var RootCmd = &cobra.Command{
 				}
 				privateKey, err = puttyKey.ParseRawPrivateKey(pass)
 				if err != nil {
-					return err
+					return fmt.Errorf("invalid key password")
 				}
 			} else {
 				privateKey, err = puttyKey.ParseRawPrivateKey(nil)
@@ -303,6 +304,12 @@ func waitForPassword(c *gophercloud.ServiceClient, id string, secs uint) (server
 func readKey(path string) ([]byte, error) {
 	f, err := os.Open(filepath.FromSlash(path))
 	if err != nil {
+		// checking for interactive mode
+		if stat, e := os.Stdout.Stat(); e == nil && (stat.Mode()&os.ModeCharDevice) != 0 {
+			log.Print(err)
+			// interactive terminal, read the key from stdin
+			return getKeyFromStdin()
+		}
 		return nil, err
 	}
 
@@ -334,6 +341,30 @@ func readKey(path string) ([]byte, error) {
 	return key, nil
 }
 
+func getKeyFromStdin() ([]byte, error) {
+	fmt.Print("Paste private key contents, then type . and enter: ")
+	defer fmt.Println()
+	var key []byte
+	for {
+		v, err := term.ReadPassword(int(syscall.Stdin))
+		if err != nil {
+			return nil, err
+		}
+		l := len(v)
+		if l == 1 && v[0] == '.' {
+			// exit on single dot
+			return key, nil
+		}
+		if l > 0 && v[l-1] == '.' {
+			// exit when dot is at the end of the line
+			key = append(key, v[:l-1]...)
+			return key, nil
+		}
+		key = append(key, v...)
+		key = append(key, '\n')
+	}
+}
+
 func getKeyPass(quiet bool) ([]byte, error) {
 	pass := env.Getenv("NOVA_PASSWORD_KEY_PASSWORD")
 
@@ -344,7 +375,8 @@ func getKeyPass(quiet bool) ([]byte, error) {
 
 		log.Print("Private key is encrypted with the password")
 		fmt.Print("Enter the key password: ")
-		return gopass.GetPasswd()
+		defer fmt.Println()
+		return term.ReadPassword(int(syscall.Stdin))
 	}
 
 	return []byte(pass), nil
