@@ -4,8 +4,8 @@ go 1.15
 
 require (
 	github.com/google/uuid v1.1.2
-	github.com/gophercloud/gophercloud v0.15.1-0.20210205220151-18b16b34db5c
-	github.com/gophercloud/utils v0.0.0-20210209042946-13abf2251886
+	github.com/gophercloud/gophercloud v1.3.0
+	github.com/gophercloud/utils v0.0.0-20230523080330-de873b9cf00d
 	github.com/kayrus/putty v1.0.4
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/viper v1.7.1
