@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/google/uuid v1.3.0
 	github.com/gophercloud/gophercloud v1.3.0
-	github.com/gophercloud/utils v0.0.0-20230523080330-de873b9cf00d
+	github.com/gophercloud/utils c2cbb9f23ff9
 	github.com/kayrus/putty v1.0.4
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/viper v1.7.1
