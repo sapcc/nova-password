@@ -5,7 +5,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -195,7 +194,7 @@ func newComputeV2() (*gophercloud.ServiceClient, error) {
 	}
 
 	if v := os.Getenv("OS_CACERT"); v != "" {
-		caCert, err := ioutil.ReadFile(v)
+		caCert, err := os.ReadFile(v)
 		if err != nil {
 			return nil, fmt.Errorf("failed to read %q CA certificate: %s", v, err)
 		}
