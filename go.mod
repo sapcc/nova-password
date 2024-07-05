@@ -8,7 +8,7 @@ require (
 	github.com/gophercloud/utils v0.0.0-20230523080330-de873b9cf00d
 	github.com/kayrus/putty v1.0.4
 	github.com/spf13/cobra v1.8.1
-	github.com/spf13/viper v1.18.2
+	github.com/spf13/viper v1.19.0
 	golang.org/x/crypto v0.24.0
 	golang.org/x/term v0.21.0
 )
@@ -22,7 +22,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml v1.2.0 // indirect
-	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
+	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
