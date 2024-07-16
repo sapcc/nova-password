@@ -11,7 +11,7 @@ Flags:
   -h, --help                      help for nova-password
   -i, --private-key-path string   a path to the RSA private key (PuTTY and OpenSSH formats) (default "~/.ssh/id_rsa")
   -q, --quiet                     quiet (no extra output)
-      --version                   version for nova-password
+  -v, --version                   version for nova-password
   -w, --wait uint                 wait for the password timeout in seconds
 ```
 
