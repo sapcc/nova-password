@@ -1,15 +1,17 @@
 module github.com/sapcc/nova-password
 
-go 1.20
+go 1.22
+
+toolchain go1.22.5
 
 require (
 	github.com/google/uuid v1.6.0
 	github.com/gophercloud/gophercloud v1.12.0
 	github.com/gophercloud/utils v0.0.0-20231010081019-80377eca5d56
-	github.com/kayrus/putty v1.0.4
+	github.com/kayrus/putty v1.0.5
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
-	golang.org/x/crypto v0.24.0
+	golang.org/x/crypto v0.25.0
 	golang.org/x/term v0.22.0
 )
 
