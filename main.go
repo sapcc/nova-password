@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"crypto/rsa"
 	"crypto/tls"
 	"crypto/x509"
@@ -12,15 +13,16 @@ import (
 	"path/filepath"
 	"strings"
 	"syscall"
+	"time"
 
 	"github.com/google/uuid"
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack"
-	"github.com/gophercloud/gophercloud/openstack/compute/v2/servers"
-	"github.com/gophercloud/utils/client"
-	"github.com/gophercloud/utils/env"
-	"github.com/gophercloud/utils/openstack/clientconfig"
-	servers_utils "github.com/gophercloud/utils/openstack/compute/v2/servers"
+	"github.com/gophercloud/gophercloud/v2"
+	"github.com/gophercloud/gophercloud/v2/openstack"
+	"github.com/gophercloud/gophercloud/v2/openstack/compute/v2/servers"
+	"github.com/gophercloud/utils/v2/client"
+	"github.com/gophercloud/utils/v2/env"
+	"github.com/gophercloud/utils/v2/openstack/clientconfig"
+	servers_utils "github.com/gophercloud/utils/v2/openstack/compute/v2/servers"
 	"github.com/kayrus/putty"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -118,13 +120,13 @@ var RootCmd = &cobra.Command{
 		// Only RSA PKCS #1 v1.5 is supported by OpenStack
 		case *rsa.PrivateKey:
 			// Initialize the compute client
-			client, err := newComputeV2()
+			client, err := newComputeV2(cmd.Context())
 			if err != nil {
 				return err
 			}
 
 			for _, server := range args {
-				err = processServer(client, server, v, wait, quiet)
+				err = processServer(cmd.Context(), client, server, v, wait, quiet)
 				if err != nil {
 					log.Printf("error getting the password for the %q server: %s", server, err)
 					errors = append(errors, fmt.Errorf("error getting the password for the %q server: %s", server, err))
@@ -177,7 +179,7 @@ func initRootCmdFlags() {
 
 // newComputeV2 creates a ServiceClient that may be used with the v2 compute
 // package.
-func newComputeV2() (*gophercloud.ServiceClient, error) {
+func newComputeV2(ctx context.Context) (*gophercloud.ServiceClient, error) {
 	ao, err := clientconfig.AuthOptions(nil)
 	if err != nil {
 		return nil, err
@@ -218,7 +220,7 @@ func newComputeV2() (*gophercloud.ServiceClient, error) {
 	}
 
 	provider.UserAgent.Prepend("nova-password/" + Version)
-	err = openstack.Authenticate(provider, *ao)
+	err = openstack.Authenticate(ctx, provider, *ao)
 	if err != nil {
 		return nil, err
 	}
@@ -228,12 +230,12 @@ func newComputeV2() (*gophercloud.ServiceClient, error) {
 	})
 }
 
-func processServer(client *gophercloud.ServiceClient, server string, privateKey *rsa.PrivateKey, wait uint, quiet bool) error {
+func processServer(ctx context.Context, client *gophercloud.ServiceClient, server string, privateKey *rsa.PrivateKey, wait uint, quiet bool) error {
 	tmp := server
 	// Verify whether UUID was provided. If the name was provided, resolve the server name
 	_, err := uuid.Parse(server)
 	if err != nil {
-		server, err = servers_utils.IDFromName(client, server)
+		server, err = servers_utils.IDFromName(ctx, client, server)
 		if err != nil {
 			return err
 		}
@@ -248,13 +250,13 @@ func processServer(client *gophercloud.ServiceClient, server string, privateKey 
 			log.Printf("Waiting for %d seconds to get the password", wait)
 		}
 		// Wait for the encrypted server password
-		res, err = waitForPassword(client, server, wait)
+		res, err = waitForPassword(ctx, client, server, wait)
 		if err != nil {
 			return err
 		}
 	} else {
 		// Get the encrypted server password
-		res = servers.GetPassword(client, server)
+		res = servers.GetPassword(ctx, client, server)
 	}
 
 	if res.Err != nil {
@@ -276,11 +278,13 @@ func processServer(client *gophercloud.ServiceClient, server string, privateKey 
 	return nil
 }
 
-func waitForPassword(c *gophercloud.ServiceClient, id string, secs uint) (servers.GetPasswordResult, error) {
+func waitForPassword(ctx context.Context, c *gophercloud.ServiceClient, id string, secs uint) (servers.GetPasswordResult, error) {
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(secs)*time.Second)
+	defer cancel()
 	var res servers.GetPasswordResult
-	err := gophercloud.WaitFor(int(secs), func() (bool, error) {
+	err := gophercloud.WaitFor(ctx, func(ctx context.Context) (bool, error) {
 		var err error
-		res = servers.GetPassword(c, id)
+		res = servers.GetPassword(ctx, c, id)
 		if res.Err != nil {
 			return false, res.Err
 		}
