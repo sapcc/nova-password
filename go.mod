@@ -9,7 +9,7 @@ require (
 	github.com/kayrus/putty v1.0.5
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
-	golang.org/x/crypto v0.25.0
+	golang.org/x/crypto v0.27.0
 	golang.org/x/term v0.24.0
 )
 
