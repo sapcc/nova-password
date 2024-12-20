@@ -4,8 +4,8 @@ go 1.22
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/gophercloud/gophercloud/v2 v2.3.0
-	github.com/gophercloud/utils/v2 v2.0.0-20241209100706-e3a3b7c07d26
+	github.com/gophercloud/gophercloud/v2 v2.4.0
+	github.com/gophercloud/utils/v2 v2.0.0-20241220104409-2e0af06694a1
 	github.com/kayrus/putty v1.0.5
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
