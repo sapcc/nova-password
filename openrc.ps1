@@ -1,0 +1,9 @@
+$env:OS_AUTH_URL="http://keystone.local/v3"
+$env:OS_IDENTITY_API_VERSION="3"
+$env:OS_PROJECT_NAME="my-project"
+$env:OS_PROJECT_DOMAIN_NAME="domain"
+$env:OS_USERNAME="my-username"
+$env:OS_USER_DOMAIN_NAME="domain"
+$Password = Read-Host -Prompt "Please enter your OpenStack Password" -AsSecureString
+$env:OS_PASSWORD = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password))
+$env:OS_REGION_NAME="region"
