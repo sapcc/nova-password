@@ -51,10 +51,10 @@ Before using `nova-password` on Windows, make sure to source the OpenStack envir
 Before using `nova-password` on Linux or macOS, ensure that the OpenStack environment variables are sourced by running the `openrc.sh` script.
 
 ```sh
-source ~/openrc.sh
-nova-password --private-key-path ~/.ssh/id_rsa my-server
+source ./openrc.sh
+./nova-password --private-key-path ~/.ssh/id_rsa my-server
 # or
-nova-password 717433dc-4c2e-4d62-9467-6dd3715b2c6c server-name
+./nova-password 717433dc-4c2e-4d62-9467-6dd3715b2c6c server-name
 # or
-nova-password my-server -i ~/.ssh/putty.ppk
+./nova-password my-server -i ~/.ssh/putty.ppk
 ```
