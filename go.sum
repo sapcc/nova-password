@@ -26,6 +26,8 @@ github.com/gophercloud/gophercloud/v2 v2.1.1 h1:KUeVTUoq6um/CijR+hl1JRZ35SXRY62L
 github.com/gophercloud/gophercloud/v2 v2.1.1/go.mod h1:f2hMRC7Kakbv5vM7wSGHrIPZh6JZR60GVHryJlF/K44=
 github.com/gophercloud/gophercloud/v2 v2.3.0 h1:5ipI2Mgxee0TwQxqnOIUdTbzL4ZBB8GORyZko+yGXI0=
 github.com/gophercloud/gophercloud/v2 v2.3.0/go.mod h1:uJWNpTgJPSl2gyzJqcU/pIAhFUWvIkp8eE8M15n9rs4=
+github.com/gophercloud/gophercloud/v2 v2.7.0 h1:o0m4kgVcPgHlcXiWAjoVxGd8QCmvM5VU+YM71pFbn0E=
+github.com/gophercloud/gophercloud/v2 v2.7.0/go.mod h1:Ki/ILhYZr/5EPebrPL9Ej+tUg4lqx71/YH2JWVeU+Qk=
 github.com/gophercloud/utils/v2 v2.0.0-20240705071316-780b64d153e3 h1:Jakaq9ALfVGOGC8w0eTS2FMa+yG8bMbM1lDhkFpEDXA=
 github.com/gophercloud/utils/v2 v2.0.0-20240705071316-780b64d153e3/go.mod h1:SlglU6S3SCTU9qjapk7XjPufH/VhHXi+nKl8fuoLUoc=
 github.com/gophercloud/utils/v2 v2.0.0-20240912080913-c094a6e5b7da h1:hdJBhN3o3qB5v3J2LIwBEEiI05VglnEyr4VaU4cwNHI=
