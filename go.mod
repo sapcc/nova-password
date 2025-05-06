@@ -7,7 +7,7 @@ toolchain go1.24.1
 require (
 	github.com/google/uuid v1.6.0
 	github.com/gophercloud/gophercloud/v2 v2.7.0
-	github.com/gophercloud/utils/v2 v2.0.0-20241209100706-e3a3b7c07d26
+	github.com/gophercloud/utils/v2 v2.0.0-20250506092640-af27464b6166
 	github.com/kayrus/putty v1.0.5
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.1
@@ -18,7 +18,7 @@ require (
 require (
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
-	github.com/gofrs/uuid/v5 v5.3.0 // indirect
+	github.com/gofrs/uuid/v5 v5.3.2 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
