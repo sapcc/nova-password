@@ -27,7 +27,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"golang.org/x/crypto/ssh"
-	"golang.org/x/term"
 )
 
 const maxKeySize = 10240
@@ -349,7 +348,7 @@ func getKeyFromStdin() ([]byte, error) {
 	defer fmt.Println()
 	var key []byte
 	for {
-		v, err := term.ReadPassword(syscall.Stdin)
+		v, err := readPassword(syscall.Stdin)
 		if err != nil {
 			return nil, err
 		}
@@ -379,7 +378,7 @@ func getKeyPass(quiet bool) ([]byte, error) {
 		log.Print("Private key is encrypted with the password")
 		fmt.Print("Enter the key password: ")
 		defer fmt.Println()
-		return term.ReadPassword(syscall.Stdin)
+		return readPassword(syscall.Stdin)
 	}
 
 	return []byte(pass), nil
