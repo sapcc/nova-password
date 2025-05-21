@@ -10,6 +10,10 @@ on:
     tags:
       - 'v*'
 
+# to allow the action to create a release
+permissions:
+  contents: write
+
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
