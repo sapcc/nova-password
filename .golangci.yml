@@ -1,0 +1,101 @@
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  default: none
+  enable:
+    - asciicheck
+    - bodyclose
+    - copyloopvar
+    - dogsled
+    - errcheck
+    - exhaustive
+    - godot
+    - goheader
+    - gomodguard
+    - goprintffuncname
+    - govet
+    - ineffassign
+    - misspell
+    - nakedret
+    - nolintlint
+    - prealloc
+    - staticcheck
+    - unconvert
+    - unused
+    - whitespace
+#    - cyclop
+#    - dupl
+#    - durationcheck
+#    - errname
+#    - errorlint
+#    - exhaustivestruct
+#    - forbidigo
+#    - forcetypeassert
+#    - funlen
+#    - gochecknoglobals
+#    - gochecknoinits
+#    - gocognit
+#    - goconst
+#    - gocritic
+#    - gocyclo
+#    - godox
+#    - goerr113
+#    - gofumpt
+#    - golint
+#    - gomnd
+#    - gomoddirectives
+#    - gosec (gas)
+#    - gosimple (megacheck)
+#    - ifshort
+#    - importas
+#    - interfacer
+#    - lll
+#    - makezero
+#    - maligned
+#    - nestif
+#    - nilerr
+#    - nlreturn
+#    - noctx
+#    - paralleltest
+#    - predeclared
+#    - promlinter
+#    - revive
+#    - scopelint
+#    - sqlclosecheck
+#    - tagliatelle
+#    - testpackage
+#    - thelper
+#    - tparallel
+#    - unparam
+#    - wastedassign
+#    - wrapcheck
+#    - wsl
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    #rules:
+    #  - linters:
+    #      - staticcheck
+    #    text: "SA1019: (x509.EncryptPEMBlock|strings.Title)"
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - goimports
+    - gci
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

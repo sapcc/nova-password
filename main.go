@@ -34,7 +34,7 @@ const maxKeySize = 10240
 
 var Version string
 
-// RootCmd represents the base command when called without any subcommands
+// RootCmd represents the base command when called without any subcommands.
 var RootCmd = &cobra.Command{
 	Use:          "nova-password <server-name>|<server-id> [<server-name>|<server-id>...]",
 	Short:        "Get the admin password for an OpenStack server",
@@ -42,7 +42,7 @@ var RootCmd = &cobra.Command{
 	Version:      Version,
 	PreRunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) == 0 {
-			cmd.Usage()
+			_ = cmd.Usage()
 			return fmt.Errorf("server name has to be provided")
 		}
 		return nil
@@ -171,10 +171,10 @@ func initRootCmdFlags() {
 	RootCmd.PersistentFlags().StringP("private-key-path", "i", defaultKeyPath, "a path to the RSA private key (PuTTY and OpenSSH formats)")
 	RootCmd.PersistentFlags().UintP("wait", "w", 0, "wait for the password timeout in seconds")
 	RootCmd.PersistentFlags().BoolP("quiet", "q", false, "quiet (no extra output)")
-	viper.BindPFlag("debug", RootCmd.PersistentFlags().Lookup("debug"))
-	viper.BindPFlag("private-key-path", RootCmd.PersistentFlags().Lookup("private-key-path"))
-	viper.BindPFlag("wait", RootCmd.PersistentFlags().Lookup("wait"))
-	viper.BindPFlag("quiet", RootCmd.PersistentFlags().Lookup("quiet"))
+	_ = viper.BindPFlag("debug", RootCmd.PersistentFlags().Lookup("debug"))
+	_ = viper.BindPFlag("private-key-path", RootCmd.PersistentFlags().Lookup("private-key-path"))
+	_ = viper.BindPFlag("wait", RootCmd.PersistentFlags().Lookup("wait"))
+	_ = viper.BindPFlag("quiet", RootCmd.PersistentFlags().Lookup("quiet"))
 }
 
 // newComputeV2 creates a ServiceClient that may be used with the v2 compute
@@ -201,7 +201,7 @@ func newComputeV2(ctx context.Context) (*gophercloud.ServiceClient, error) {
 			return nil, fmt.Errorf("failed to read %q CA certificate: %s", v, err)
 		}
 		caPool := x509.NewCertPool()
-		ok := caPool.AppendCertsFromPEM([]byte(caCert))
+		ok := caPool.AppendCertsFromPEM(caCert)
 		if !ok {
 			return nil, fmt.Errorf("failed to parse %q CA certificate", v)
 		}
@@ -349,7 +349,7 @@ func getKeyFromStdin() ([]byte, error) {
 	defer fmt.Println()
 	var key []byte
 	for {
-		v, err := term.ReadPassword(int(syscall.Stdin))
+		v, err := term.ReadPassword(syscall.Stdin)
 		if err != nil {
 			return nil, err
 		}
@@ -379,7 +379,7 @@ func getKeyPass(quiet bool) ([]byte, error) {
 		log.Print("Private key is encrypted with the password")
 		fmt.Print("Enter the key password: ")
 		defer fmt.Println()
-		return term.ReadPassword(int(syscall.Stdin))
+		return term.ReadPassword(syscall.Stdin)
 	}
 
 	return []byte(pass), nil
