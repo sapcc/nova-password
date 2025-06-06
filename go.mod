@@ -7,7 +7,7 @@ toolchain go1.24.3
 require (
 	github.com/google/uuid v1.6.0
 	github.com/gophercloud/gophercloud/v2 v2.7.0
-	github.com/gophercloud/utils/v2 v2.0.0-20250506092640-af27464b6166
+	github.com/gophercloud/utils/v2 v2.0.0-20250606082759-66f28657aaaa
 	github.com/kayrus/putty v1.0.5
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.1
@@ -36,7 +36,7 @@ require (
 	go.uber.org/multierr v1.9.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
 	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/text v0.25.0 // indirect
+	golang.org/x/text v0.26.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
