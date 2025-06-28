@@ -7,7 +7,7 @@ toolchain go1.24.4
 require (
 	github.com/google/uuid v1.6.0
 	github.com/gophercloud/gophercloud/v2 v2.7.0
-	github.com/gophercloud/utils/v2 v2.0.0-20250606082759-66f28657aaaa
+	github.com/gophercloud/utils/v2 v2.0.0-20250617123236-b0c67de63928
 	github.com/kayrus/putty v1.0.5
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.1
