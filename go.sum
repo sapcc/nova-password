@@ -18,6 +18,8 @@ github.com/gophercloud/gophercloud/v2 v2.7.0 h1:o0m4kgVcPgHlcXiWAjoVxGd8QCmvM5VU
 github.com/gophercloud/gophercloud/v2 v2.7.0/go.mod h1:Ki/ILhYZr/5EPebrPL9Ej+tUg4lqx71/YH2JWVeU+Qk=
 github.com/gophercloud/utils/v2 v2.0.0-20250606082759-66f28657aaaa h1:OOEwidtCeVPoRJamjOqgqMiQq1jTsFUPnkqF0NOOIGA=
 github.com/gophercloud/utils/v2 v2.0.0-20250606082759-66f28657aaaa/go.mod h1:/P5PTywPbaqHL9PCkZo3K0SbXyrghWvxSZdJL9ooJIo=
+github.com/gophercloud/utils/v2 v2.0.0-20250617123236-b0c67de63928 h1:V/rII3GfXXuqmNnOAm1ECo8l7iAN4qgCo6EgKlFTyOI=
+github.com/gophercloud/utils/v2 v2.0.0-20250617123236-b0c67de63928/go.mod h1:/P5PTywPbaqHL9PCkZo3K0SbXyrghWvxSZdJL9ooJIo=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
 github.com/kayrus/putty v1.0.5 h1:cl43+15J/skBlhwfoA2jBP7vSpwzcweNPHK4JeN1hf0=
