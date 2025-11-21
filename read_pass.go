@@ -1,5 +1,6 @@
 //go:build !windows
-// +build !windows
+
+// !windows
 
 package main
 
