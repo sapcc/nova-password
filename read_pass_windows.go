@@ -1,4 +1,5 @@
 //go:build windows
+
 // windows
 
 package main
