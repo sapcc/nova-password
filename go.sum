@@ -9,6 +9,8 @@ github.com/go-viper/mapstructure/v2 v2.4.0 h1:EBsztssimR/CONLSZZ04E8qAkxNYq4Qp9L
 github.com/go-viper/mapstructure/v2 v2.4.0/go.mod h1:oJDH3BJKyqBA2TXFhDsKDGDTlndYOZ6rGS0BRZIxGhM=
 github.com/gofrs/uuid/v5 v5.4.0 h1:EfbpCTjqMuGyq5ZJwxqzn3Cbr2d0rUZU7v5ycAk/e/0=
 github.com/gofrs/uuid/v5 v5.4.0/go.mod h1:CDOjlDMVAtN56jqyRUZh58JT31Tiw7/oQyEXZV+9bD8=
+github.com/gofrs/uuid/v5 v5.5.1 h1:z1Ce19/JwNidXpy3tOQc3241lnJLKdKyq/xlNvlD4Ng=
+github.com/gofrs/uuid/v5 v5.5.1/go.mod h1:bbAA98EoIlxyRHIVg6ektCSsZ5n8mSbwgEhvhMYlZgg=
 github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
 github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
@@ -23,6 +25,8 @@ github.com/gophercloud/utils/v2 v2.0.0-20260424064311-2eeed4ceb3e9 h1:WEPhYFzYmp
 github.com/gophercloud/utils/v2 v2.0.0-20260424064311-2eeed4ceb3e9/go.mod h1:bIEH+wgvnxfegUewFuGi0u/L+ji5uiEuVVQMNKQASEY=
 github.com/gophercloud/utils/v2 v2.0.0-20260626221802-4ae35253ac13 h1:Dnid+JYEmkqPWw/vJHRUzZsjO3mdoyCRo2l5UYCqh8k=
 github.com/gophercloud/utils/v2 v2.0.0-20260626221802-4ae35253ac13/go.mod h1:zpDKeT3ElgCs1UA+7B8+XlDu3R+jkK/CBC1di5qOeow=
+github.com/gophercloud/utils/v2 v2.0.0-20260824073324-42b9474d09d4 h1:VKbePn/0e1cg6HSvVB5CKeXpVcKmD2AuMk6WQhjexuI=
+github.com/gophercloud/utils/v2 v2.0.0-20260824073324-42b9474d09d4/go.mod h1:z+yO4g4N0u8rJuWNPVcjZHVAlzAFapFNnMOtFIpqddM=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
 github.com/kayrus/putty v1.0.5 h1:cl43+15J/skBlhwfoA2jBP7vSpwzcweNPHK4JeN1hf0=
