@@ -4,8 +4,8 @@ go 1.26.0
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/gophercloud/gophercloud/v2 v2.14.0
-	github.com/gophercloud/utils/v2 v2.0.0-20260824073324-42b9474d09d4
+	github.com/gophercloud/gophercloud/v2 v2.15.0
+	github.com/gophercloud/utils/v2 v2.0.0-20260922174841-b4759ea0529b
 	github.com/kayrus/putty v1.0.5
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.21.0
